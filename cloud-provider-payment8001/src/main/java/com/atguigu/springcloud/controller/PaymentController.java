@@ -4,9 +4,12 @@ import com.atguigu.springcloud.entities.CommonResult;
 import com.atguigu.springcloud.entities.Payment;
 import com.atguigu.springcloud.service.PaymentService;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.client.ServiceInstance;
+import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -26,8 +29,9 @@ public class PaymentController {
 
     @Value("${server.port}")
     private String serverPort;
-    // @Resource
-    // private DiscoveryClient discoveryClient;
+
+    @Resource
+    private DiscoveryClient discoveryClient;
 
     /**
      * 通过主键查询单条数据
@@ -39,7 +43,7 @@ public class PaymentController {
     public CommonResult<Payment> selectOne(@PathVariable("id") Long id) {
         Payment payment = this.paymentService.queryById(id);
 
-        return new CommonResult<Payment>(200, "select success 8001!", payment);
+        return new CommonResult<Payment>(200, "select success " + serverPort, payment);
     }
 
     @PostMapping("create")
@@ -47,22 +51,21 @@ public class PaymentController {
         Payment insert = this.paymentService.insert(payment);
         System.out.println(insert);
         System.out.println("1234567890");
-        return new CommonResult(200, "insert success", insert);
+        return new CommonResult(200, "insert success " + serverPort, insert);
     }
 
-    // @GetMapping("discovery")
-    // public Object discovery() {
-    //     List<String> services = discoveryClient.getServices();
-    //     services.forEach(service->{
-    //         System.out.println("----service"+service);
-    //     });
-    //     List<ServiceInstance> instances = discoveryClient.getInstances("CLOUD-PAYMENT-SERVICE");
-    //     for (ServiceInstance instance : instances) {
-    //         System.out.println(instance.getServiceId()+"\t" + instance.getHost()+"\t"+ instance.getPort()+"\t"+instance.getUri());;
-    //     }
-    //
-    //     return this.discoveryClient;
-    // }
+    @GetMapping("discovery")
+    public Object discovery() {
+        List<String> services = discoveryClient.getServices();
+        services.forEach(service -> {
+            System.out.println("8001服务：" + service);
+        });
+        List<ServiceInstance> instances = discoveryClient.getInstances("CLOUD-PAYMENT-SERVICE");
+        for (ServiceInstance instance : instances) {
+            System.out.println(instance.getServiceId() + "\t" + instance.getHost() + "\t" + instance.getPort() + "\t" + instance.getUri());
+        }
+        return this.discoveryClient;
+    }
 
     @GetMapping("lb")
     public String getPaymentLB() {
