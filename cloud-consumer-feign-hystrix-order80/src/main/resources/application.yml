@@ -12,6 +12,11 @@ spring:
 
 feign:
   hystrix:
-    enabled: true
+    enabled: false
+
+# 设置 ribbon
+ribbon:
+  ConnectTimeout: 5000 # 设置 ribbon 连接超时时间
+  ReadTimeout: 5000 # 设置 ribbon 连接读取时间
 
 

@@ -11,16 +11,14 @@ import java.util.concurrent.TimeUnit;
 @Service
 public class PaymentService {
 
-    //成功
     public String paymentInfo_OK(Integer id) {
         return "线程池：" + Thread.currentThread().getName() + "   paymentInfo_OK,id：  " + id + "\t" + "哈哈哈";
     }
 
-    //失败
     @HystrixCommand(fallbackMethod = "paymentInfo_TimeOutHandle", commandProperties = {
-            @HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds", value = "10000")})
+            @HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds", value = "5000")})
     public String paymentInfo_TimeOut(Integer id) {
-        Integer timeNumber = 5;
+        Integer timeNumber = 3;
         try {
             TimeUnit.SECONDS.sleep(timeNumber);
         } catch (InterruptedException e) {
@@ -32,7 +30,6 @@ public class PaymentService {
     public String paymentInfo_TimeOutHandle(Integer id) {
         return "线程池：" + Thread.currentThread().getName() + "   paymentInfo_TimeOutHandle,id：  " + id + "\t" + "8001系统繁忙或运行报错，兜底方法";
     }
-
 
     //服务熔断
     @HystrixCommand(fallbackMethod = "paymentCircuitBreaker_fallback", commandProperties = {
