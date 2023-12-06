@@ -3,11 +3,12 @@ server:
 
 spring:
   application:
-    name: nacos-payment-provider-9002
+    name: nacos-payment-provider
   cloud:
     nacos:
       discovery:
-        server-addr: localhost:8848 #配置Nacos地址
+#        server-addr: localhost:8848 #配置Nacos地址
+        server-addr: 101.37.23.54:80 #集群版 服务注册中心地址
 
 management:
   endpoints:

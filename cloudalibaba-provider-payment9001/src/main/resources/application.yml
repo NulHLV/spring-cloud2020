@@ -1,13 +1,15 @@
-server:
-  port: 9001
-
 spring:
-  application:
-    name: nacos-payment-provider-9001
-  cloud:
-    nacos:
-      discovery:
-        server-addr: localhost:8848 #配置Nacos地址
+  profiles:
+    active: dev
+
+#spring:
+#  application:
+#    name: nacos-payment-provider
+#  cloud:
+#    nacos:
+#      discovery:
+#        server-addr: localhost:8848 #配置Nacos地址
+#        server-addr: 101.37.23.54:1111 #nacos集群 nginx负载均衡地址
 
 management:
   endpoints:
