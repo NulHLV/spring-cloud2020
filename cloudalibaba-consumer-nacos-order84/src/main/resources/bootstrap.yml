@@ -1,0 +1,55 @@
+server:
+  port: 84
+spring:
+  application:
+    name: cloudalibaba-consumer-order # 服务名
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 101.37.23.54:3333 #nacos服务注册中心地址
+      config:
+        server-addr: 101.37.23.54:3333 #动态配置中心地址
+        file-extension: yml #指定yaml格式的配置
+        group: DEV_GROUP # nacos动态配置中心分组
+        #namespace: 6c89fbe0-2226-4e75-83c0-4450b52c8294 #nacos命名空间# 公式  ${spring.application.name}-${spring.profile.active}.${spring.cloud.nacos.config.file-extension}
+
+    #设置sentinel服务降级/熔断地址sentinel:
+    sentinel:
+      transport:
+        dashboard: localhost:8080
+        port: 8719  #默认8719，假如被占用了会自动从8719开始依次+1扫描。直至找到未被占用的端口
+        web-context-unify: false # 关闭 Context 上下文整合
+        #sentinel流控规则持久化
+        datasource:
+          ds1:
+            nacos:
+              server-addr: 101.37.23.54:3333
+              dataId: cloudalibaba-consumer-order
+              groupId: DEFAULT_GROUP
+              data-type: json
+              rule-type: flow
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+
+#设置feign超时时间（OpenFeign默认支持ribbon），默认为1S
+ribbon:
+  ReadTimeout: 5000 #建立连接所需时间，适用于网络正常情况下，两端连接时间
+  ConnectTimeout: 5000 #建立连接后，从服务端读取可用资源可用时间
+
+#激活sentinel对openFeign的支持
+feign:
+  sentinel:
+    enabled: true
+
+##open-feign日志
+#logging:
+#  level:
+#    com.atguigu.springcloud.alibaba.service.PaymentOpenFeignService: debug
+
+#消费者将要去访问的微服务名称(注册成功进nacos的微服务提供者)
+service-url:
+  nacos-user-service: http://cloudalibaba-provider-payment

@@ -9,17 +9,36 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>cloud-consumer-feign-order80</artifactId>
+    <artifactId>cloudalibaba-provider-payment9004</artifactId>
 
     <dependencies>
+        <!-- sentinel 自定义熔断反馈-->
         <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-openfeign</artifactId>
+            <groupId>com.alibaba.csp</groupId>
+            <artifactId>sentinel-annotation-aspectj</artifactId>
         </dependency>
 
         <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-sentinel</artifactId>
+        </dependency>
+
+        <!-- 提供了在Sentinel流控规则中使用Nacos作为数据源的功能-->
+        <dependency>
+            <groupId>com.alibaba.csp</groupId>
+            <artifactId>sentinel-datasource-nacos</artifactId>
+        </dependency>
+
+        <!-- nacos-config-->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
+        </dependency>
+
+        <!-- nacos-discovery-->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
         </dependency>
 
         <dependency>
@@ -28,6 +47,7 @@
             <version>${project.version}</version>
         </dependency>
 
+        <!-- 日常通用依赖-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
@@ -57,4 +77,5 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
+
 </project>
