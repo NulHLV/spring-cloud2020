@@ -20,8 +20,8 @@ public class RedisConfig {
         template.setHashKeySerializer(new StringRedisSerializer());
 
         // 设置 value 的序列化器为 GenericJackson2JsonRedisSerializer
-        template.setValueSerializer(new GenericJackson2JsonRedisSerializer());
-        template.setHashValueSerializer(new GenericJackson2JsonRedisSerializer());
+        template.setValueSerializer(new StringRedisSerializer());
+        template.setHashValueSerializer(new StringRedisSerializer());
 
         return template;
     }

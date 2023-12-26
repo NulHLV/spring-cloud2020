@@ -68,6 +68,9 @@ public class RedisController {
             goodsName = UUID.randomUUID().toString();
             Thread.sleep(10000);
             redisTemplate.opsForValue().set("goods", "娃哈哈" + goodsName);
+
+            // 延迟双删
+            // redisTemplate.delete("goods");
         } finally {
             rLock.unlock();
         }
