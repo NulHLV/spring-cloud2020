@@ -40,6 +40,8 @@
         <module>cloudalibaba-provider-payment9004</module>
         <module>cloudalibaba-consumer-nacos-order84</module>
         <module>redis-study5050</module>
+        <module>rabbitmq-publisher-study5051</module>
+        <module>rabbitmq-consumer-study5052</module>
     </modules>
 
     <!-- 统一管理jar包版本 -->
