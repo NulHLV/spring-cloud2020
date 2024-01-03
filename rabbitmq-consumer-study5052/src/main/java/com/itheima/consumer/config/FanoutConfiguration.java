@@ -68,4 +68,10 @@ public class FanoutConfiguration {
         return BindingBuilder.bind(fanoutQueue2).to(fanoutExchange);
     }
 
+
+    /**
+     * 创建死信交换机
+     */
+
+
 }
